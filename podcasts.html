@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>About | Vanita Prisha</title>
+  <title>Podcasts | Vanita Prisha</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="page-podcasts">
   <header class="site-header">
     <div class="container header-inner">
       <div class="brand">
@@ -24,33 +24,52 @@
         <a href="testimonials.html">Testimonials</a>
         <a href="podcasts.html">Podcasts</a>
         <a href="faq.html">FAQ</a>
-        <a href="https://calendly.com/vanitabalani/unstoppable-you-by-vanita-discovery-call?month=2026-02" target="_blank" rel="noreferrer noopener" class="nav-cta">Book Now</a>
+        <a href="https://calendly.com/vanitabalani/unstoppable-you-by-vanita-discovery-call?month=2026-02" class="nav-cta" target="_blank" rel="noreferrer noopener">Book Now</a>
 
       </nav>
     </div>
   </header>
 
   <main>
-    <section class="section section-taupe">
-      <div class="container section-grid about-layout">
-        <div class="about-side">
-          <h1>A bit about me</h1>
-          <figure class="about-photo">
-            <img src="assets/images/pic.jpeg" alt="Vanita Prisha portrait." loading="lazy" />
-            <figcaption>Grounded, culturally aware coaching that helps you reconnect with your voice.</figcaption>
-          </figure>
+    <section class="section section-warm podcast-hero">
+      <div class="container podcast-hero-inner">
+        <p class="eyebrow">Featured Conversations</p>
+        <h1>Podcast Features</h1>
+        <p class="podcast-hero-copy">
+          Conversations on voice, identity, and the courage to choose yourself. I’ll keep adding new links as they go live.
+        </p>
+      </div>
+    </section>
+
+    <section class="section section-cloud podcast-listen">
+      <div class="container">
+        <div class="section-heading podcast-listen-head">
+          <h2>Listen now</h2>
+          <p class="section-lead">Featured appearance</p>
         </div>
-        <div class="section-copy">
-          <p>
-            Hi, I’m Vanita. I work with women, young people and professionals who feel stuck or disconnected from their voice. Having lived in Ghana, Taiwan, Australia, the United Kingdom and the United Arab Emirates, and with a background in both physiotherapy and business, I understand how complex life can feel when you are navigating many cultures, expectations and identities at once.
-          </p>
-          <p>
-            I married young and learned firsthand how easy it is to lose your own dreams when everyone around you has ideas about who you should be. That experience fuels my coaching. I want people to know they have choice. They have a voice. And the feeling of stuckness you may carry can be transformed into strength, clarity and forward movement.
-          </p>
-          <p>
-            My intention is to create a space where you feel understood, empowered and ready to step into a life that reflects who you truly are.
-          </p>
+        <div class="link-grid podcast-link-grid">
+          <a class="link-card podcast-feature" data-video-url="https://www.youtube.com/watch?v=FF3v0dir9o0" href="https://www.youtube.com/watch?v=FF3v0dir9o0" target="_blank" rel="noreferrer noopener">
+            <div class="podcast-thumb">
+              <img class="podcast-thumb-image" src="https://img.youtube.com/vi/FF3v0dir9o0/maxresdefault.jpg" alt="Cover image for the featured podcast episode." loading="lazy" />
+              <span class="podcast-play" aria-hidden="true">Play</span>
+            </div>
+            <div class="podcast-feature-body">
+              <p class="podcast-cover-label">Featured podcast</p>
+              <h3 class="podcast-title">YouTube podcast episode</h3>
+              <p>Watch the full conversation on YouTube.</p>
+            </div>
+          </a>
         </div>
+      </div>
+    </section>
+
+    <section class="section section-sand">
+      <div class="container cta">
+        <div>
+          <h2>Invite me to your podcast</h2>
+          <p>Let’s create a conversation that helps listeners feel seen and supported.</p>
+        </div>
+        <a class="button button-primary" href="mailto:vanita@broadenmindz.com">Email me</a>
       </div>
     </section>
   </main>
@@ -100,5 +119,56 @@
       </div>
     </div>
   </footer>
+  <script>
+    (() => {
+      const cards = document.querySelectorAll('.podcast-feature[data-video-url]');
+      if (!cards.length) return;
+
+      const getVideoId = (url) => {
+        try {
+          const parsed = new URL(url);
+          if (parsed.hostname.includes('youtu.be')) {
+            return parsed.pathname.replace('/', '');
+          }
+          if (parsed.pathname.startsWith('/shorts/')) {
+            return parsed.pathname.split('/')[2] || '';
+          }
+          return parsed.searchParams.get('v') || '';
+        } catch (error) {
+          return '';
+        }
+      };
+
+      cards.forEach(async (card) => {
+        const videoUrl = card.dataset.videoUrl;
+        if (!videoUrl) return;
+
+        card.href = videoUrl;
+        const id = getVideoId(videoUrl);
+        const thumb = card.querySelector('.podcast-thumb-image');
+        if (thumb && id) {
+          thumb.src = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+          thumb.onerror = () => {
+            thumb.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+          };
+        }
+
+        const titleEl = card.querySelector('.podcast-title');
+        if (!titleEl) return;
+
+        try {
+          const endpoint = `https://www.youtube.com/oembed?url=${encodeURIComponent(videoUrl)}&format=json`;
+          const response = await fetch(endpoint, { mode: 'cors' });
+          if (!response.ok) return;
+          const data = await response.json();
+          if (data && data.title) {
+            titleEl.textContent = data.title;
+          }
+        } catch (error) {
+          // Keep fallback title if oEmbed cannot be reached.
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
