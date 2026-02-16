@@ -89,6 +89,20 @@ a:focus {
   gap: 0.35rem;
 }
 
+.brand-top {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.brand-logo {
+  width: clamp(74px, 8vw, 96px);
+  height: clamp(74px, 8vw, 96px);
+  object-fit: contain;
+  display: block;
+  flex: 0 0 auto;
+}
+
 .brand-name {
   font-family: var(--heading-font);
   font-size: 1.8rem;
@@ -462,6 +476,10 @@ h1 {
   overflow: hidden;
 }
 
+main section[id] {
+  scroll-margin-top: 6.5rem;
+}
+
 .section .container {
   position: relative;
   z-index: 1;
@@ -656,7 +674,8 @@ h1 {
   gap: 1.1rem;
 }
 
-.about-side h1 {
+.about-side h1,
+.about-side h2 {
   margin: 0;
 }
 
@@ -702,7 +721,8 @@ h1 {
   margin: 0;
 }
 
-.workplace-layout h1 {
+.workplace-layout h1,
+.workplace-layout h2 {
   margin-bottom: 0.15rem;
 }
 
