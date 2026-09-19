@@ -623,6 +623,125 @@ main section[id] {
   margin-bottom: 1.2rem;
 }
 
+.podcast-thumb--cover {
+  isolation: isolate;
+}
+
+.podcast-thumb--cover::before {
+  content: "";
+  position: absolute;
+  inset: -24px;
+  background: var(--cover) center / cover no-repeat;
+  filter: blur(20px) brightness(0.7);
+  z-index: -1;
+}
+
+.podcast-thumb--cover img {
+  object-fit: contain;
+  transform: none;
+}
+
+.link-card.podcast-feature:hover .podcast-thumb--cover img,
+.link-card.podcast-feature:focus .podcast-thumb--cover img {
+  transform: scale(1.03);
+}
+
+.newsletter-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+}
+
+.newsletter-copy {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.newsletter h2 {
+  font-size: clamp(2rem, 3.4vw, 2.8rem);
+  line-height: 1.1;
+}
+
+.newsletter .section-lead {
+  font-size: 1.05rem;
+  max-width: 44ch;
+}
+
+.newsletter-form {
+  display: grid;
+  gap: 0.75rem;
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+  background: var(--cloud-white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+}
+
+.newsletter-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.newsletter-row {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.newsletter-row input[type="email"] {
+  flex: 1;
+  min-width: 0;
+  padding: 0.8rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: var(--taupe);
+  color: var(--ink);
+  font: inherit;
+}
+
+.newsletter-row input[type="email"]:focus-visible {
+  outline: 2px solid var(--wine-berry);
+  outline-offset: 2px;
+  background: var(--cloud-white);
+}
+
+.newsletter-row .button {
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+  padding: 0.8rem 1.6rem;
+}
+
+.newsletter-trap {
+  position: absolute;
+  left: -5000px;
+}
+
+.newsletter-note {
+  font-size: 0.8rem;
+  color: rgba(36, 34, 30, 0.7);
+}
+
+.newsletter-status {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--wine-berry);
+}
+
+@media (max-width: 800px) {
+  .newsletter-inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .newsletter-row {
+    flex-direction: column;
+  }
+}
+
 .podcast-link-grid {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.2rem;

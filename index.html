@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=2" />
 </head>
 <body>
   <header class="site-header">
@@ -222,10 +222,21 @@
     <section id="podcasts" class="section section-cloud podcast-listen">
       <div class="container">
         <div class="section-heading podcast-listen-head">
-          <h2>Podcast Features</h2>
-          <p class="section-lead">Featured appearances</p>
+          <h2>Podcasts</h2>
+          <p class="section-lead">Conversations on mindset, growth, and intentional choices.</p>
         </div>
         <div class="link-grid podcast-link-grid">
+          <a class="link-card podcast-feature" href="https://podcasts.apple.com/sg/podcast/choice-before-chance-a-broaden-mindz-podcast/id1885505401" target="_blank" rel="noreferrer noopener">
+            <div class="podcast-thumb podcast-thumb--cover" style="--cover: url('assets/choice-before-chance.jpg')">
+              <img src="assets/choice-before-chance.jpg" alt="Choice Before Chance: A Broaden Mindz Podcast cover art." width="1200" height="1200" loading="lazy" />
+              <span class="podcast-play" aria-hidden="true">Listen</span>
+            </div>
+            <div class="podcast-feature-body">
+              <p class="podcast-cover-label">Broaden Mindz podcast</p>
+              <h3>Choice Before Chance</h3>
+              <p>Hosted by Vanita. Listen on Apple Podcasts.</p>
+            </div>
+          </a>
           <a class="link-card podcast-feature" href="https://www.youtube.com/watch?v=FF3v0dir9o0" target="_blank" rel="noreferrer noopener">
             <div class="podcast-thumb">
               <img src="https://img.youtube.com/vi/FF3v0dir9o0/maxresdefault.jpg" alt="Cover image for the featured podcast episode." loading="lazy" />
@@ -252,6 +263,44 @@
       </div>
     </section>
 
+    <section id="newsletter" class="section section-warm newsletter" aria-label="Newsletter signup">
+      <div class="container newsletter-inner">
+        <div class="newsletter-copy">
+          <p class="podcast-cover-label">Weekly newsletter</p>
+          <h2>Get a little clarity every week</h2>
+          <p class="section-lead">One short email a week from Vanita on mindset, growth, and making intentional choices.</p>
+        </div>
+        <!--
+          MAILCHIMP: replace the form action with the "Signup form" URL from Mailchimp
+          (Audience > Signup forms > Embedded forms) and the hidden field name with the
+          "b_..." name from the same embed code. Both are marked below.
+        -->
+        <form class="newsletter-form" action="MAILCHIMP_FORM_ACTION_URL" method="post" target="_blank">
+          <label class="newsletter-label" for="newsletter-email">Email address</label>
+          <div class="newsletter-row">
+            <input id="newsletter-email" type="email" name="EMAIL" autocomplete="email" placeholder="you@example.com" required />
+            <button type="submit" class="button button-primary">Subscribe</button>
+          </div>
+          <div class="newsletter-trap" style="position: absolute; left: -5000px;" aria-hidden="true">
+            <input type="text" name="MAILCHIMP_HONEYPOT_FIELD_NAME" tabindex="-1" value="" autocomplete="off" />
+          </div>
+          <p class="newsletter-note">By subscribing you agree to receive weekly emails from Broaden Mindz. Unsubscribe at any time.</p>
+          <p class="newsletter-status" role="status" aria-live="polite" hidden>Newsletter signups open soon. Please check back shortly.</p>
+        </form>
+        <script>
+          // Until the Mailchimp action URL above is filled in, show a message instead of a dead link.
+          (function () {
+            var form = document.querySelector('.newsletter-form');
+            if (!form || /^https?:\/\//.test(form.getAttribute('action'))) return;
+            form.addEventListener('submit', function (e) {
+              e.preventDefault();
+              form.querySelector('.newsletter-status').hidden = false;
+            });
+          })();
+        </script>
+      </div>
+    </section>
+
   </main>
 
   <footer class="site-footer">
@@ -264,6 +313,7 @@
           <a href="#workshops">Workshops</a>
           <a href="#testimonials">Testimonials</a>
           <a href="#podcasts">Podcasts</a>
+          <a href="#newsletter">Newsletter</a>
         </div>
         <div class="footer-social" aria-label="Social media">
           <a class="social-icon" href="https://www.instagram.com/broadenmindz/?utm_source=qr" target="_blank" rel="noreferrer noopener" aria-label="Instagram">
