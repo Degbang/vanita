@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=2" />
+  <link rel="stylesheet" href="styles.css?v=4" />
 </head>
 <body>
   <header class="site-header">
@@ -271,32 +271,40 @@
           <p class="section-lead">One short email a week from Vanita on mindset, growth, and making intentional choices.</p>
         </div>
         <!--
-          MAILCHIMP: replace the form action with the "Signup form" URL from Mailchimp
-          (Audience > Signup forms > Embedded forms) and the hidden field name with the
-          "b_..." name from the same embed code. Both are marked below.
+          MAILERLITE: posts directly to the "newsletter" form's real endpoint
+          (MailerLite account 2646184, form 199411336807973893) so the field
+          styling matches the site instead of MailerLite's default widget.
+          Submits into a hidden iframe so the page never navigates away or
+          shows the raw response. Update the action URL and field names here
+          if the form is ever recreated in MailerLite.
         -->
-        <form class="newsletter-form" action="MAILCHIMP_FORM_ACTION_URL" method="post" target="_blank">
-          <label class="newsletter-label" for="newsletter-email">Email address</label>
-          <div class="newsletter-row">
-            <input id="newsletter-email" type="email" name="EMAIL" autocomplete="email" placeholder="you@example.com" required />
-            <button type="submit" class="button button-primary">Subscribe</button>
-          </div>
-          <div class="newsletter-trap" style="position: absolute; left: -5000px;" aria-hidden="true">
-            <input type="text" name="MAILCHIMP_HONEYPOT_FIELD_NAME" tabindex="-1" value="" autocomplete="off" />
-          </div>
-          <p class="newsletter-note">By subscribing you agree to receive weekly emails from Broaden Mindz. Unsubscribe at any time.</p>
-          <p class="newsletter-status" role="status" aria-live="polite" hidden>Newsletter signups open soon. Please check back shortly.</p>
-        </form>
+        <div class="newsletter-form-wrap">
+          <form class="newsletter-form" action="https://assets.mailerlite.com/jsonp/2646184/forms/199411336807973893/subscribe" method="post" target="ml-newsletter-frame">
+            <label class="newsletter-label" for="newsletter-email">Email address</label>
+            <div class="newsletter-row">
+              <input id="newsletter-email" type="email" name="fields[email]" autocomplete="email" placeholder="you@example.com" required />
+              <button type="submit" class="button button-primary">Subscribe</button>
+            </div>
+            <input type="hidden" name="ml-submit" value="1" />
+            <input type="hidden" name="anticsrf" value="true" />
+            <p class="newsletter-note">By subscribing you agree to receive weekly emails from Broaden Mindz. Unsubscribe at any time.</p>
+          </form>
+          <p class="newsletter-status" role="status" aria-live="polite" hidden>Thanks — you're subscribed! Check your inbox to confirm.</p>
+        </div>
+        <iframe name="ml-newsletter-frame" title="Newsletter signup" hidden></iframe>
         <script>
-          // Until the Mailchimp action URL above is filled in, show a message instead of a dead link.
           (function () {
             var form = document.querySelector('.newsletter-form');
-            if (!form || /^https?:\/\//.test(form.getAttribute('action'))) return;
-            form.addEventListener('submit', function (e) {
-              e.preventDefault();
-              form.querySelector('.newsletter-status').hidden = false;
+            var status = document.querySelector('.newsletter-status');
+            if (!form || !status) return;
+            form.addEventListener('submit', function () {
+              form.hidden = true;
+              status.hidden = false;
             });
           })();
+          try {
+            fetch('https://assets.mailerlite.com/jsonp/2646184/forms/199411336807973893/takel');
+          } catch (e) {}
         </script>
       </div>
     </section>
@@ -446,5 +454,15 @@
       items.forEach((item) => observer.observe(item));
     })();
   </script>
+
+  <!-- MailerLite Universal -->
+  <script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2646184');
+  </script>
+  <!-- End MailerLite Universal -->
 </body>
 </html>

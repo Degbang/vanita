@@ -668,6 +668,10 @@ main section[id] {
   max-width: 44ch;
 }
 
+.newsletter-form-wrap {
+  display: grid;
+}
+
 .newsletter-form {
   display: grid;
   gap: 0.75rem;
@@ -714,19 +718,23 @@ main section[id] {
   padding: 0.8rem 1.6rem;
 }
 
-.newsletter-trap {
-  position: absolute;
-  left: -5000px;
-}
-
 .newsletter-note {
   font-size: 0.8rem;
   color: rgba(36, 34, 30, 0.7);
 }
 
+.newsletter-form[hidden] {
+  display: none;
+}
+
 .newsletter-status {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 600;
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+  background: var(--cloud-white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
   color: var(--wine-berry);
 }
 
